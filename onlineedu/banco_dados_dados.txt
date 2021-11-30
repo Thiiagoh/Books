@@ -1,0 +1,105 @@
+CREATE TABLE IF NOT EXISTS `testandolivros`.`clientes` (
+  `nome` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `testandolivros`.`livros` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(45) NOT NULL,
+  `autor` VARCHAR(45) NOT NULL,
+  `genero` VARCHAR(45) NOT NULL,
+  `ano` DATE NOT NULL,
+  `imagem` VARCHAR(45) NOT NULL,
+  `premiados` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 13
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `testandolivros`.`ler_mais_tarde` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `clientes_email` VARCHAR(45) NOT NULL,
+  `livros_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_ler_mais_tarde_clientes1_idx` (`clientes_email` ASC) ,
+  INDEX `fk_ler_mais_tarde_livros1_idx` (`livros_id` ASC) ,
+  CONSTRAINT `fk_ler_mais_tarde_clientes1`
+    FOREIGN KEY (`clientes_email`)
+    REFERENCES `testandolivros`.`clientes` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ler_mais_tarde_livros1`
+    FOREIGN KEY (`livros_id`)
+    REFERENCES `testandolivros`.`livros` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+
+CREATE TABLE IF NOT EXISTS `testandolivros`.`avaliacao` (
+  `idAvaliacao` INT(11) NOT NULL AUTO_INCREMENT,
+  `avaliacao` VARCHAR(45) NOT NULL,
+  `clientes_email` VARCHAR(45) NOT NULL,
+  `livros_id` INT(11) NOT NULL,
+  PRIMARY KEY (`idAvaliacao`),
+  INDEX `fk_avaliacao_clientes1_idx` (`clientes_email` ASC),
+  INDEX `fk_avaliacao_livros1_idx` (`livros_id` ASC),
+  CONSTRAINT `fk_avaliacao_clientes1`
+    FOREIGN KEY (`clientes_email`)
+    REFERENCES `testandolivros`.`clientes` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_avaliacao_livros1`
+    FOREIGN KEY (`livros_id`)
+    REFERENCES `testandolivros`.`livros` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 60
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+
+INSERT INTO `livros`(`titulo`, `autor`, `genero`, `ano`, `imagem`, `premiados`) VALUES
+
+('It - A Coisa', 'Stephen King', 'Terror', '1986-09-15', 'it.jpg', 'nao'),
+('O Iluminado', 'Stephen King', 'Terror', '1977-01-28', 'iluminado.jpg', 'nao'),
+('O Exorcista', 'William Peter Blatty', 'Terror', '1971-00-00', 'exor.jpg', 'nao'),
+('A Assombração da Casa da Colina', 'Shirley Jackson', 'Terror', '1959-00-00', 'maldicao.jpg', 'nao'),
+('Doutor Sono', 'Stephen King', 'Terror', '2019-00-00', 'doctor.jpg', 'nao'),
+('Caixa de Pássaros', 'Josh Malerman', 'Terror', '2018-00-00', 'bird.jpg', 'nao'),
+('Estou atrás de você', 'John Ajvide Lindqvist', 'Terror', '2016-06-27', 'estou.jpg', 'nao'),
+('O Menino que Desenhava Monstros', 'Keith Donohue', 'Terror', '2014-10-07', 'menino.jpg', 'nao'),
+
+
+('Como eu era antes de você', 'Jojo Moyes', 'Romance', '2012-01-05', 'como.jpg', 'nao'),
+('A Seleção', 'Kiera Cass', 'Romance', '2012-04-14', 'selecao.jpg', 'nao'),
+('A Culpa É das Estrelas', 'John Green', 'Romance', '2011-05-25', 'culpa.jpg', 'nao'),
+('Cinquenta Tons de Cinza', 'E. L. James', 'Romance', '2014-10-07', 'cinquenta.jpg', 'nao'),
+('PS, Eu Te Amo', 'Cecelia Ahern', 'Romance', '2003-00-00', 'amo.jpg', 'nao'),
+('A Menina que Roubava Livros', 'Markus Zusak', 'Romance', '2005-00-00', 'menina.jpg', 'nao'),
+('Will e Will, Um nome, Um Destino', 'John Green, David Levithan', 'Romance', '2010-04-06', 'willwill.jpg', 'nao'),
+('Orgulho e Preconceito', 'Jane Austen', 'Romance', '1813-01-28', 'orgulho.jpg', 'nao'),
+
+
+('A Guerra dos Tronos', 'George R. R. Martin', 'Fantasia', '1996-08-06', 'guerra.jpg', 'nao'),
+('A Rainha Vermelha', 'Victoria Aveyard', 'Fantasia', '2015-02-10', 'rainha.jpg', 'nao'),
+('O Senhor dos Anéis', 'J. R. R. Tolkien', 'Fantasia', '1949-00-00', 'senhor.jpg', 'nao'),
+('Jogos Vorazes', 'Suzanne Collins', 'Fantasia', '2008-09-14', 'vorazes.jpg', 'nao'),
+('Harry Potter e a Pedra Filosofal', 'J. K. Rowling', 'Fantasia', '1997-06-26', 'pedra.jpg', 'nao'),
+('O Hobbit', 'J. R. R. Tolkien', 'Fantasia','1937-00-00', 'hobbit.jpg', 'nao'),
+('As Brumas de Avalon', 'Marion Zimmer Bradley', 'Fantasia','1982-00-00', 'avalon.jpg', 'nao'),
+('As Mentiras de Locke Lamora', 'Scott Lynch', 'Fantasia','2006-00-00', 'mentiras.jpg', 'nao')
+
+('Fahrenheit 451', ' Ray Bradbury', 'Ficcao','1953-10-19', 'fahrenheit.jpg', 'nao'),
+('Frankenstein', 'Mary Shelley', 'Ficcao','1823-00-00', 'frankestein.jpg', 'nao'),
+('I, Robot', 'Isaac Asimov', 'Ficcao','1950-12-02', 'robot.jpg', 'nao'),
+('The Time Machine', ' H. G. Wells', 'Ficcao','1895-00-00', 'machine.jpg', 'nao'),
+('Encontro com Rama', 'Arthur C. Clarke', 'Ficcao','1973-06-00', 'rama.jpg', 'nao'),
+('A revolução dos bichos', 'George Orwell', 'Ficcao','1945-08-17', 'bichos.jpg', 'nao'),
+('As Crônicas Marcianas', 'Ray Bradbury', 'Ficcao','1950-00-00', 'marcianas.jpg', 'nao'),
+('2001: A Space Odyssey', 'Arthur C. Clarke', 'Ficcao','1968-00-00', 'odisseia.jpg', 'nao'),
